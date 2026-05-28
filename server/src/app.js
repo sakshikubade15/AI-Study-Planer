@@ -1,30 +1,35 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import helmet from "helmet";
+import dotenv from "dotenv";
 import morgan from "morgan";
+import userRoutes from "./routes/userRoutes.js";
+
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// Security middleware
 app.use(helmet());
 
-// Allow frontend requests
 app.use(cors());
 
-// Parse JSON requests
 app.use(express.json());
 
-// Logger
 app.use(morgan("dev"));
 
-// Test Route
+app.use("/api/user", userRoutes);
+
+
+// Routes
+app.use("/api/auth", authRoutes);
+
+
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "AI Study Planet API Running",
+    message: "AI Study Planer API Running",
   });
 });
 
